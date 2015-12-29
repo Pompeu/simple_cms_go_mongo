@@ -3,25 +3,20 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>Create New User</title>
+    <title>{{.Title}}</title>
     <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
-    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="/static/css/main.css">
   </head>
-  <body>
-    <div class="mdl-layout mdl-js-layout mdl-color--grey-100">
+  <body class="">
+    <div class="demo-layout-transparent mdl-layout mdl-js-layout mdl-layout mdl-js-layout mdl-color--grey-100">
       <main class="mdl-layout__content">
       <div class="mdl-card mdl-shadow--6dp">
         <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
-          <h2 class="mdl-card__title-text">CMS Limp</h2>
+          <h2 class="mdl-card__title-text">{{.Title}}</h2>
         </div>
         <div class="mdl-card__supporting-text">
           <form action="/login/" method="post">
-            <input type="hidden" name="id">
-            <div class="mdl-textfield mdl-js-textfield">
-              <input class="mdl-textfield__input" id="name" type="text" name="name">
-              <label class="mdl-textfield__label" for="name">Name...</label>
-            </div>
             <div class="mdl-textfield mdl-js-textfield">
               <input class="mdl-textfield__input" id="email" type="email" name="email">
               <label class="mdl-textfield__label" for="email">Email...</label>
@@ -33,12 +28,15 @@
           </form>
         </div>
         <div class="mdl-card__actions mdl-card--border">
-          <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Create</button>
-          <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Login</button>
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect">Login</button>
+
+          <a href="/" class="mdl-button mdl-js-button mdl-button--accent ">Voltar</a>
         </div>
       </div>
       </main>
     </div>
     </div>
+
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
   </body>
 </html>

@@ -14,7 +14,7 @@ func (t *Server) MainIndex(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Add("Content Type", "text/html")
 
-	tmpl, err := template.ParseFiles("../pompeu/templates/index.tmpl")
+	tmpl, err := template.ParseFiles("../pompeu/templates/index.html")
 	if err != nil {
 		log.Print(err)
 		http.Error(w, err.Error(), 500)

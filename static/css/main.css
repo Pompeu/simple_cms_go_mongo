@@ -6,3 +6,11 @@
   padding: 24px;
   flex: none;
 }
+
+.demo-layout-transparent {
+  background: url('/static/images/starwars.jpg') center / cover;
+}
+.demo-layout-transparent .mdl-layout__header,
+.demo-layout-transparent .mdl-layout__drawer-button {
+  color: white;
+}

@@ -16,5 +16,5 @@ func Assets(w http.ResponseWriter, r *http.Request) {
 }
 
 func suffixTrusted(path string) bool {
-	return strings.HasSuffix(path, ".css") || strings.HasSuffix(path, ".js")
+	return strings.HasSuffix(path, ".css") || strings.HasSuffix(path, ".js") || strings.HasSuffix(path, ".jpg")
 }
