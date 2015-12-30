@@ -1,15 +1,13 @@
 package controllers
 
 import (
+	"github.com/pompeu/db"
+	"github.com/pompeu/models"
+	"gopkg.in/mgo.v2/bson"
 	"html/template"
 	"log"
 	"net/http"
 )
-
-type Invalid struct {
-	Input string
-	Value string
-}
 
 func Login(w http.ResponseWriter, r *http.Request) {
 
@@ -32,17 +30,37 @@ func Login(w http.ResponseWriter, r *http.Request) {
 }
 
 func Registrar(w http.ResponseWriter, r *http.Request) {
-
 	w.Header().Add("Content Type", "text/html")
-
+	var invalid Invalid
 	tmpl, err := template.ParseFiles("../pompeu/templates/registrar.html")
+
 	if err != nil {
 		log.Print(err)
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	title := &Server{"Registrar"}
-	err = tmpl.Execute(w, title)
+
+	if r.Method == "POST" {
+		log.Println(r.Method)
+		name := r.FormValue("name")
+		email := r.FormValue("email")
+		password := r.FormValue("password")
+		invalid = validImputs(name, email, password)
+
+		if invalid.Value != "done" {
+			err = tmpl.Execute(w, invalid)
+		} else {
+			hash := genereteCode([]byte(password))
+			person := &models.Person{bson.NewObjectId(), name, email, hash}
+			err := db.Session("persons").Insert(person)
+
+			if err == nil {
+				http.Redirect(w, r, "/", 301)
+			}
+		}
+	} else {
+		err = tmpl.Execute(w, nil)
+	}
 
 	if err != nil {
 		log.Print(err)
