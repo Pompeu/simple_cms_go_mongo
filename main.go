@@ -9,5 +9,5 @@ import (
 func main() {
 	log.Print("server on")
 	reHandler := routers.ReHander()
-	http.ListenAndServe(":8080", reHandler)
+	http.ListenAndServe(":3000", reHandler)
 }
