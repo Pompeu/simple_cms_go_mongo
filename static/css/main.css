@@ -10,7 +10,22 @@
 .demo-layout-transparent {
   background: url('/static/images/starwars.jpg') center / cover;
 }
+
 .demo-layout-transparent .mdl-layout__header,
 .demo-layout-transparent .mdl-layout__drawer-button {
   color: white;
 }
+
+.mdl-card {
+  width: 600px;
+  padding : 5px;
+  margin : 5px;
+}
+
+textarea {
+  width : 580px;
+  max-width : 580px;
+  height : 300px;
+  max-height : 300px;
+}
+
