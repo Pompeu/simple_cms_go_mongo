@@ -2,8 +2,6 @@ package controllers
 
 import (
 	"github.com/pompeu/models"
-	"html/template"
-	"log"
 	"net/http"
 )
 
@@ -14,15 +12,7 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 
 func Login(w http.ResponseWriter, r *http.Request) {
 
-	log.Println(r.Method)
-	w.Header().Add("Content Type", "text/html")
-
-	tmpl, err := template.ParseFiles("../pompeu/templates/login.html")
-	if err != nil {
-		log.Print(err)
-		http.Error(w, err.Error(), 500)
-		return
-	}
+	tmpl := TemplateParse("../pompeu/templates/login.html", w)
 
 	if r.Method == "POST" {
 		email := r.FormValue("email")
@@ -31,7 +21,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		invalid := validImputs("ok", email, password)
 
 		if invalid.Value != "done" {
-			err = tmpl.Execute(w, invalid)
+			tmpl.Execute(w, invalid)
 		} else {
 			p := &models.Person{}
 			if auth, err := p.Login(email); err == nil {
@@ -45,26 +35,14 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	} else {
-		err = tmpl.Execute(w, nil)
+		tmpl.Execute(w, nil)
 	}
 
-	if err != nil {
-		log.Print(err)
-		http.Error(w, err.Error(), 500)
-		return
-	}
 }
 
 func Registrar(w http.ResponseWriter, r *http.Request) {
-	w.Header().Add("Content Type", "text/html")
 	var invalid Invalid
-	tmpl, err := template.ParseFiles("../pompeu/templates/registrar.html")
-
-	if err != nil {
-		log.Print(err)
-		http.Error(w, err.Error(), 500)
-		return
-	}
+	tmpl := TemplateParse("../pompeu/templates/registrar.html", w)
 
 	if r.Method == "POST" {
 		name := r.FormValue("name")
@@ -74,7 +52,7 @@ func Registrar(w http.ResponseWriter, r *http.Request) {
 		invalid = validImputs(name, email, password)
 
 		if invalid.Value != "done" {
-			err = tmpl.Execute(w, invalid)
+			tmpl.Execute(w, invalid)
 		} else {
 			hash := genereteCode([]byte(password))
 			p := &models.Person{}
@@ -83,12 +61,6 @@ func Registrar(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	} else {
-		err = tmpl.Execute(w, nil)
-	}
-
-	if err != nil {
-		log.Print(err)
-		http.Error(w, err.Error(), 500)
-		return
+		tmpl.Execute(w, nil)
 	}
 }

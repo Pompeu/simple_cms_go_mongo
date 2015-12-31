@@ -27,8 +27,9 @@ func (p *Post) Create() (Post, error) {
 func (p *Post) GetPosts() []Post {
 	var posts []Post
 	session := db.SimpleSession("posts")
-	err := session.DB("test").C("posts").Find(bson.M{}).All(&posts)
-	fmt.Println(err)
+	if err := session.DB("test").C("posts").Find(bson.M{}).All(&posts); err != nil {
+		panic(err)
+	}
 	defer session.Close()
 	return posts
 }
@@ -36,8 +37,9 @@ func (p *Post) GetPosts() []Post {
 func (p *Post) GetPost(id string) Post {
 	session := db.SimpleSession("posts")
 	oid := bson.ObjectIdHex(id)
-	err := session.DB("test").C("posts").Find(bson.M{"id": oid}).One(&p)
-	fmt.Println(err)
+	if err := session.DB("test").C("posts").Find(bson.M{"id": oid}).One(&p); err != nil {
+		panic(err)
+	}
 	defer session.Close()
 	return *p
 }

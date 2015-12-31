@@ -2,12 +2,11 @@ package routers
 
 import (
 	"github.com/pompeu/controllers"
-	"github.com/pompeu/helpers"
 )
 
-func ReHander() *helpers.RegexpHandler {
+func ReHander() *RegexpHandler {
 
-	h := new(helpers.RegexpHandler)
+	h := new(RegexpHandler)
 
 	h.HandleFunc("/post/$", "GET", controllers.CriarPost)
 	h.HandleFunc("/post/edit/[0-9a-z]+$", "GET", controllers.CriarPost)

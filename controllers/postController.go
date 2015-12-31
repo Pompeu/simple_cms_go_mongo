@@ -2,8 +2,6 @@ package controllers
 
 import (
 	"github.com/pompeu/models"
-	"html/template"
-	"log"
 	"net/http"
 	"strings"
 )
@@ -11,26 +9,11 @@ import (
 func ShowPost(w http.ResponseWriter, r *http.Request) {
 	id := strings.Replace(r.URL.Path, "/post/show/", "", 1)
 	post := new(models.Post).GetPost(id)
-
-	tmpl, err := template.ParseFiles("../pompeu/templates/show-posts.html")
-	if err != nil {
-		log.Print(err)
-		http.Error(w, err.Error(), 500)
-		return
-	}
-
-	err = tmpl.Execute(w, post)
+	TemplateParse("../pompeu/templates/show-posts.html", w).Execute(w, post)
 }
 
 func CriarPost(w http.ResponseWriter, r *http.Request) {
-	w.Header().Add("Content Type", "text/html")
-
-	tmpl, err := template.ParseFiles("../pompeu/templates/posts.html")
-	if err != nil {
-		log.Print(err)
-		http.Error(w, err.Error(), 500)
-		return
-	}
+	tmpl := TemplateParse("../pompeu/templates/posts.html", w)
 
 	if r.Method == "POST" {
 		title := r.FormValue("title")
@@ -51,13 +34,8 @@ func CriarPost(w http.ResponseWriter, r *http.Request) {
 			post := new(models.Post).GetPost(id)
 			tmpl.Execute(w, post)
 		} else {
-			err = tmpl.Execute(w, nil)
+			tmpl.Execute(w, nil)
 		}
 	}
 
-	if err != nil {
-		log.Print(err)
-		http.Error(w, err.Error(), 500)
-		return
-	}
 }
