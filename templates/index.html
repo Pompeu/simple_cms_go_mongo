@@ -10,6 +10,7 @@
       <div class="mdl-layout__drawer">
         <span class="mdl-layout-title">Menu</span>
         <nav class="mdl-navigation">
+
           {{if not .User }} 
           <a class="mdl-navigation__link" href="/login/">Login</a>
           <a class="mdl-navigation__link" href="/registrar/">Registrar</a>
@@ -17,11 +18,13 @@
           <a class="mdl-navigation__link" href="/post/">Postar</a>
           <a class="mdl-navigation__link" href="/logout/">Logout</a>
           {{end}}
+          <a class="mdl-navigation__link" href="/">Inicio</a>
         </nav>
       </div>
     </div>
-    <div class="demo-layout-transparent mdl-layout mdl-js-layout mdl-layout mdl-js-layout mdl-color--grey-100">
+    <div class="demo-layout-transparent mdl-layout">
       <main class="mdl-layout__content">
+
       {{$user := .User}}
       {{ range .Posts}}
       <div class="demo-card-wide mdl-card mdl-shadow--16dp">
@@ -42,7 +45,7 @@
         </div>
         <div class="mdl-card__menu">
           {{if $user}}
-          <a id="del" href="#" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+          <a id="del" href="/post/remove/{{.Id.Hex}}" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect del">
             <i class="material-icons">delete</i>
           </a>
           <div class="mdl-tooltip" for="del">Delete</div>
@@ -57,5 +60,6 @@
       </main>
     </div>
     <script src="http://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+    <script src="/static/scripts/main.js"></script>
   </body>
 </html>

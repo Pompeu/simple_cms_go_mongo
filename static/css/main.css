@@ -22,6 +22,10 @@
   margin : 5px;
 }
 
+.mdl-layout__content{
+  overflow : scroll;
+  height : 500px;
+}
 textarea {
   width : 580px;
   max-width : 580px;

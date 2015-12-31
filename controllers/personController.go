@@ -41,7 +41,6 @@ func Login(w http.ResponseWriter, r *http.Request) {
 }
 
 func Registrar(w http.ResponseWriter, r *http.Request) {
-	var invalid Invalid
 	tmpl := TemplateParse("../pompeu/templates/registrar.html", w)
 
 	if r.Method == "POST" {
@@ -49,7 +48,7 @@ func Registrar(w http.ResponseWriter, r *http.Request) {
 		email := r.FormValue("email")
 		password := r.FormValue("password")
 
-		invalid = validImputs(name, email, password)
+		invalid := validImputs(name, email, password)
 
 		if invalid.Value != "done" {
 			tmpl.Execute(w, invalid)

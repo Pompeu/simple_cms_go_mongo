@@ -9,9 +9,13 @@ func ReHander() *RegexpHandler {
 	h := new(RegexpHandler)
 
 	h.HandleFunc("/post/$", "GET", controllers.CriarPost)
+	h.HandleFunc("/post/$", "POST", controllers.CriarPost)
+
+	h.HandleFunc("/post/remove/[0-9a-z]+$", "GET", controllers.RemovePost)
 	h.HandleFunc("/post/edit/[0-9a-z]+$", "GET", controllers.CriarPost)
 	h.HandleFunc("/post/show/[0-9a-z]+$", "GET", controllers.ShowPost)
-	h.HandleFunc("/post/", "POST", controllers.CriarPost)
+
+	h.HandleFunc("/tags/[a-zA-Z]+$", "GET", controllers.ShowPostByTags)
 
 	h.HandleFunc("/login/", "GET", controllers.Login)
 	h.HandleFunc("/login/", "POST", controllers.Login)
