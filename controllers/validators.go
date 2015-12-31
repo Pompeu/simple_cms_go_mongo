@@ -18,9 +18,9 @@ func genereteCode(password []byte) string {
 	return string(hash)
 }
 
-func compare(hash, pass []byte) bool {
+func compare(hash, pass []byte) error {
 	err := bcrypt.CompareHashAndPassword(hash, pass)
-	return err != nil
+	return err
 }
 
 func validateEmail(email string) bool {
