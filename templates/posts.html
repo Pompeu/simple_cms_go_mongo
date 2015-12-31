@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>Registrar</title>
+    <title>Postar</title>
     <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
     <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -11,34 +12,44 @@
   <body>
     <div class="demo-layout-transparent mdl-layout mdl-js-layout mdl-layout mdl-js-layout mdl-color--grey-100">
       <main class="mdl-layout__content">
-      <div class="mdl-card mdl-shadow--6dp">
+      <div class="mdl-card mdl-shadow--16dp">
         <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
-          <h2 class="mdl-card__title-text">Registrar</h2>
+          <h2 class="mdl-card__title-text">Postar</h2>
         </div>
         <div class="mdl-card__supporting-text">
-          <form action="/registrar/" method="post">
+          <form  action="/post/" method="post">
             <input type="hidden" name="id">
             <div class="mdl-textfield mdl-js-textfield">
-              <input class="mdl-textfield__input" id="name" type="text" name="name">
-              <label class="mdl-textfield__label" for="name">Name...</label>
+              <input class="mdl-textfield__input"
+                     id="title"
+                     type="text" name="title" value="{{.Title}}">
+              <label class="mdl-textfield__label" for="title">Title...</label>
+            </div>
+            <div class="mdl-js-textfield">
+              <textarea row="20"
+                        cols="80"
+                        class="mdl-textfield__input"
+                        id="body" type="textarea" name="body">
+                {{.Body}}
+              </textarea>
             </div>
             <div class="mdl-textfield mdl-js-textfield">
-              <input class="mdl-textfield__input" id="email" type="email" name="email">
-              <label class="mdl-textfield__label" for="email">Email...</label>
-            </div>
-            <div class="mdl-textfield mdl-js-textfield">
-              <input class="mdl-textfield__input" id="password" type="password" name="password">
-              <label class="mdl-textfield__label" for="password">Password...</label>
+              <input class="mdl-textfield__input"
+                     id="tags"
+                     type="tags"
+                     name="tags" value="{{.Tags}}">
+              <label class="mdl-textfield__label" for="tags">tags...</label>
             </div>
             <div class="mdl-card__actions mdl-card--border">
-              <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Registrar</button>
-              <a href="/login/" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Login</button>
+              <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Salvar</button>
 
               <a href="/" class="mdl-button mdl-js-button mdl-button--accent ">Voltar</a>
             </div>
-            <span class="mdl-button mdl-js-button mdl-button--accent ">
+            {{if not .Title}}
+            <span class="mdl-js-button mdl-button--accent">
               {{.}}
             </span>
+            {{end}}
           </form>
         </div>
       </div>

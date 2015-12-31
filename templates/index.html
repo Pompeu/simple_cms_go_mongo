@@ -8,15 +8,52 @@
   <body>
     <div class="demo-layout-transparent mdl-layout mdl-js-layout">
       <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">{{.Title}}</span>
+        <span class="mdl-layout-title">Menu</span>
         <nav class="mdl-navigation">
+          {{if not .User }} 
           <a class="mdl-navigation__link" href="/login/">Login</a>
           <a class="mdl-navigation__link" href="/registrar/">Registrar</a>
-          <a class="mdl-navigation__link" href="">Postar</a>
+          {{ else }}
+          <a class="mdl-navigation__link" href="/post/">Postar</a>
+          <a class="mdl-navigation__link" href="/logout/">Logout</a>
+          {{end}}
         </nav>
       </div>
+    </div>
+    <div class="demo-layout-transparent mdl-layout mdl-js-layout mdl-layout mdl-js-layout mdl-color--grey-100">
       <main class="mdl-layout__content">
-      <div class="page-content"></div>
+      {{$user := .User}}
+      {{ range .Posts}}
+      <div class="demo-card-wide mdl-card mdl-shadow--16dp">
+        <div class="mdl-card__title">
+          <a class="mdl-navigation__link"  href="/post/show/{{.Id.Hex}}">
+            <h2 class="mdl-card__title-text">{{.Title}}</h2>
+          </a>
+        </div>
+        <div class="mdl-card__supporting-text">
+          {{.Body}}
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+          {{range .Tags}}
+          <a href="tags/{{.}}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+            {{.}}
+          </a>
+          {{end}}
+        </div>
+        <div class="mdl-card__menu">
+          {{if $user}}
+          <a id="del" href="#" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+            <i class="material-icons">delete</i>
+          </a>
+          <div class="mdl-tooltip" for="del">Delete</div>
+          <a id="edit" href="/post/edit/{{.Id.Hex}}" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+            <i class="material-icons">edit</i>
+          </a>
+          <div class="mdl-tooltip" for="edit">Edit</div>
+          {{end}}
+        </div>
+      </div>
+      {{end}}
       </main>
     </div>
     <script src="http://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
