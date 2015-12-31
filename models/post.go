@@ -16,6 +16,32 @@ type Post struct {
 	Tags  []string      `json:"tags" bson:"tags"`
 }
 
+func (p *Post) Create() (Post, error) {
+	p.Id = bson.NewObjectId()
+	session := db.SimpleSession("posts")
+	err := session.DB("test").C("posts").Insert(p)
+	defer session.Close()
+	return *p, err
+}
+
+func (p *Post) GetPosts() []Post {
+	var posts []Post
+	session := db.SimpleSession("posts")
+	err := session.DB("test").C("posts").Find(bson.M{}).All(&posts)
+	fmt.Println(err)
+	defer session.Close()
+	return posts
+}
+
+func (p *Post) GetPost(id string) Post {
+	session := db.SimpleSession("posts")
+	oid := bson.ObjectIdHex(id)
+	err := session.DB("test").C("posts").Find(bson.M{"id": oid}).One(&p)
+	fmt.Println(err)
+	defer session.Close()
+	return *p
+}
+
 func (p *Post) Save(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	post := Post{}

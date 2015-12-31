@@ -16,6 +16,24 @@ type Person struct {
 	Password string        `json:"password" bson:"password"`
 }
 
+func (p *Person) Create(name, email, hash string) error {
+	p.Id = bson.NewObjectId()
+	p.Name = name
+	p.Email = email
+	p.Password = hash
+	session := db.SimpleSession("persons")
+	defer session.Close()
+	err := session.DB("test").C("persons").Insert(p)
+	return err
+}
+
+func (p *Person) Login(email string) (Person, error) {
+	session := db.SimpleSession("persons")
+	err := session.DB("test").C("persons").Find(bson.M{"email": email}).One(&p)
+	defer session.Close()
+	return *p, err
+}
+
 func (p *Person) Save(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	person := Person{}
