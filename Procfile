@@ -1,1 +1,1 @@
-cms: pompeu
+web: main
