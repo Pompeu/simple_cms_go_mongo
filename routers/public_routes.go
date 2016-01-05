@@ -12,7 +12,8 @@ func ReHander() *RegexpHandler {
 	h.HandleFunc("/post/$", "POST", controllers.CriarPost)
 
 	h.HandleFunc("/post/remove/[0-9a-z]+$", "GET", controllers.RemovePost)
-	h.HandleFunc("/post/edit/[0-9a-z]+$", "GET", controllers.CriarPost)
+	h.HandleFunc("/post/edit/[0-9a-z]+$", "GET", controllers.EditarPost)
+	h.HandleFunc("/post/edit/+$", "POST", controllers.EditarPost)
 	h.HandleFunc("/post/show/[0-9a-z]+$", "GET", controllers.ShowPost)
 
 	h.HandleFunc("/tags/[a-zA-Z]+$", "GET", controllers.ShowPostByTags)

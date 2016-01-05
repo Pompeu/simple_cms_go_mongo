@@ -25,6 +25,18 @@ func (p *Post) Create() (Post, error) {
 	return *p, err
 }
 
+func (p *Post) Update(id, title, body string, tags []string) error {
+	oid := bson.ObjectIdHex(id)
+	p.Id = oid
+	p.Title = title
+	p.Body = body
+	p.Tags = tags
+	session := db.SimpleSession("posts")
+	err := session.DB("test").C("posts").Update(bson.M{"id": oid}, &p)
+	defer session.Close()
+	return err
+}
+
 func (p *Post) GetPostsByTag(tag string) []Post {
 	var posts []Post
 	session := db.SimpleSession("posts")
@@ -105,7 +117,7 @@ func (p *Post) GetAll(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%s", jsonPosts)
 }
 
-func (p *Post) Update(w http.ResponseWriter, r *http.Request) {
+func (p *Post) UpdateApi(w http.ResponseWriter, r *http.Request) {
 
 	id := strings.Replace(r.URL.Path, "/posts/", "", 1)
 	if !bson.IsObjectIdHex(id) {

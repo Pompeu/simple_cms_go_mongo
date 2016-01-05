@@ -17,8 +17,8 @@
           <h2 class="mdl-card__title-text">Postar</h2>
         </div>
         <div class="mdl-card__supporting-text">
-          <form  action="/post/" method="post">
-            <input type="hidden" value="{{.Id.Hex}}" name="id">
+          <form  action="/post/edit/" method="post">
+            <input type="hidden" value="{{.Id}}" name="id">
             <div class="mdl-textfield mdl-js-textfield">
               <input class="mdl-textfield__input"
                      id="title"

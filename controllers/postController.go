@@ -43,6 +43,42 @@ func middlware(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+type Post struct {
+	Id    string `json:"id" bson:"id`
+	Title string `json:"title" bson:"title"`
+	Body  string `json:"body" bson:"body"`
+	Tags  string `json:"tags" bson:"tags"`
+}
+
+func EditarPost(w http.ResponseWriter, r *http.Request) {
+	tmpl := TemplateParse("../pompeu/templates/edit-posts.html", w)
+	middlware(w, r)
+
+	if r.Method == "POST" {
+		id := r.FormValue("id")
+		title := r.FormValue("title")
+		body := r.FormValue("body")
+		tags := strings.Split(r.FormValue("tags"), " ")
+		err := new(models.Post).Update(id, title, body, tags)
+		if err != nil {
+			fmt.Println(err)
+		} else {
+			http.Redirect(w, r, "/", 301)
+		}
+	} else {
+		if id := strings.Replace(
+			r.URL.Path, "/post/edit/", "", 1); id != "/post/" {
+			post := new(models.Post).GetPost(id)
+			tags := strings.Join(post.Tags, " ")
+			p := &Post{post.Id.Hex(), post.Title, post.Body, tags}
+			tmpl.Execute(w, p)
+		} else {
+			tmpl.Execute(w, nil)
+		}
+	}
+}
+
 func CriarPost(w http.ResponseWriter, r *http.Request) {
 	tmpl := TemplateParse("../pompeu/templates/posts.html", w)
 	middlware(w, r)
@@ -69,14 +105,6 @@ func CriarPost(w http.ResponseWriter, r *http.Request) {
 				tmpl.Execute(w, err)
 			}
 		}
-
-	} else {
-		if id := strings.Replace(r.URL.Path, "/post/edit/", "", 1); id != "/post/" {
-			post := new(models.Post).GetPost(id)
-			tmpl.Execute(w, post)
-		} else {
-			tmpl.Execute(w, nil)
-		}
 	}
-
+	tmpl.Execute(w, nil)
 }
