@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"github.com/gorilla/securecookie"
+	"github.com/pompeu/Godeps/_workspace/src/github.com/gorilla/securecookie"
 	"net/http"
 )
 

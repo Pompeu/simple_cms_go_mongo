@@ -2,12 +2,12 @@ package main
 
 import (
 	"github.com/pompeu/routers"
-	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
-	log.Print("server on")
+	port := os.Getenv("PORT")
 	reHandler := routers.ReHander()
-	http.ListenAndServe(":3000", reHandler)
+	http.ListenAndServe(":"+port, reHandler)
 }

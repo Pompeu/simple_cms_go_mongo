@@ -2,8 +2,29 @@ package db
 
 import (
 	"errors"
-	"gopkg.in/mgo.v2"
+	"github.com/pompeu/Godeps/_workspace/src/gopkg.in/mgo.v2"
+	"log"
+	"os"
 )
+
+const (
+	labDb   = "mongodb://ItacirPompeu:552525@ds049130.mongolab.com:49130/pompeuapi"
+	localDb = "mongodb://localhost/"
+)
+
+var (
+	useDb string
+)
+
+func init() {
+
+	if os.Getenv("USER") == "pompeu" {
+		useDb = localDb
+	} else {
+		useDb = labDb
+	}
+	log.Println(useDb)
+}
 
 type MongoDb struct {
 	mongoUrl string
@@ -47,7 +68,7 @@ func (b MongoDb) Close() {
 }
 
 func Session(col string) *mgo.Collection {
-	session, err := mgo.Dial("mongodb://localhost/" + col)
+	session, err := mgo.Dial(useDb + "" + col)
 	if err != nil {
 		panic(err)
 	}
@@ -55,7 +76,8 @@ func Session(col string) *mgo.Collection {
 }
 
 func SimpleSession(col string) *mgo.Session {
-	session, err := mgo.Dial("mongodb://localhost/" + col)
+	session, err := mgo.Dial(useDb + "" + col)
+
 	if err != nil {
 		panic(err)
 	}

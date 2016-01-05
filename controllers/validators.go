@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"golang.org/x/crypto/bcrypt"
+	"github.com/pompeu/Godeps/_workspace/src/golang.org/x/crypto/bcrypt"
 	"regexp"
 	"strings"
 )

@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/pompeu/Godeps/_workspace/src/gopkg.in/mgo.v2/bson"
 	"github.com/pompeu/db"
-	"gopkg.in/mgo.v2/bson"
 	"net/http"
 	"strings"
 )
