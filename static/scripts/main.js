@@ -1,7 +1,6 @@
 (function () { 
-
+  var req =  new XMLHttpRequest();
   var id = document.querySelectorAll(".del");
-  console.log(id);
   var dels = Array.from(id);
   var url = "http://localhost:3000/post/remove/";
   dels.forEach(del => {
@@ -9,7 +8,6 @@
       e.preventDefault();
       var id = del.href.replace(url,"");
       if (confirm("Deseja Deletar ?")) {
-        var req =  new XMLHttpRequest();
         remove(id);
       }
     });
