@@ -1,19 +1,7 @@
-.mdl-layout {
-  align-items: center;
-  justify-content: center;
-}
+
 .mdl-layout__content {
   padding: 24px;
   flex: none;
-}
-
-.demo-layout-transparent {
-  background: url('/static/images/starwars.jpg') center / cover;
-}
-
-.demo-layout-transparent .mdl-layout__header,
-.demo-layout-transparent .mdl-layout__drawer-button {
-  color: white;
 }
 
 .mdl-card {
@@ -22,10 +10,6 @@
   margin : 5px;
 }
 
-.mdl-layout__content{
-  overflow : scroll;
-  height : 500px;
-}
 textarea {
   width : 580px;
   max-width : 580px;

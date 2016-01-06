@@ -37,6 +37,18 @@ func (p *Post) Update(id, title, body string, tags []string) error {
 	return err
 }
 
+func (p *Post) FindByName(title string) []Post {
+	var posts []Post
+	session := db.SimpleSession("posts")
+	if err := session.DB("test").C("posts").Find(
+		bson.M{"title": &bson.RegEx{
+			Pattern: title, Options: "i"}}).All(&posts); err != nil {
+		panic(err)
+	}
+	defer session.Close()
+	return posts
+}
+
 func (p *Post) GetPostsByTag(tag string) []Post {
 	var posts []Post
 	session := db.SimpleSession("posts")

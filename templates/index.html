@@ -1,16 +1,38 @@
 <html>
   <head>
-    <!-- Material Design Lite -->
-    <link rel="stylesheet" href="http://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
-    <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="static/css/main.css">
+    <meta name="viewport",content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+
   </head>
   <body>
-    <div class="demo-layout-transparent mdl-layout mdl-js-layout">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
+    mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <div class="mdl-layout-spacer"></div>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+          mdl-textfield--floating-label mdl-textfield--align-right">
+            <label class="mdl-button mdl-js-button mdl-button--icon"
+                   for="fixed-header-drawer-exp">
+              <i class="material-icons">search</i>
+            </label>
+            <div class="mdl-textfield__expandable-holder">
+              <form action="/" method="GET">
+                <input class="mdl-textfield__input"
+                       type="text"
+                       name="q"
+                       id="fixed-header-drawer-exp">
+              </form>
+            </div>
+          </div>
+        </div>
+      </header>
       <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">Menu</span>
-        <nav class="mdl-navigation">
+        <span class="mdl-layout-title">Title</span>
 
+        <nav class="mdl-navigation">
           {{if not .User }} 
           <a class="mdl-navigation__link" href="/login/">Login</a>
           <a class="mdl-navigation__link" href="/registrar/">Registrar</a>
@@ -18,48 +40,56 @@
           <a class="mdl-navigation__link" href="/post/">Postar</a>
           <a class="mdl-navigation__link" href="/logout/">Logout</a>
           {{end}}
-          <a class="mdl-navigation__link" href="/">Inicio</a>
         </nav>
       </div>
-    </div>
-    <div class="demo-layout-transparent mdl-layout">
       <main class="mdl-layout__content">
-
-      {{$user := .User}}
-      {{ range .Posts}}
-      <div class="demo-card-wide mdl-card mdl-shadow--16dp">
-        <div class="mdl-card__title">
-          <a class="mdl-navigation__link"  href="/post/show/{{.Id.Hex}}">
-            <h2 class="mdl-card__title-text">{{.Title}}</h2>
-          </a>
+      <div class="mdl-grid">
+        {{$user := .User}}
+        {{ range .Posts}}
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+          <div class="mdl-layout--fixed-header">
+            <header class="mdl-layout__header">
+              <div class="mdl-layout__header-row">
+                <a class="mdl-navigation__link"
+                   href="/post/show/{{.Id.Hex}}">
+                  <h2 class="mdl-card__title-text">{{.Title}}</h2>
+                </a>
+                {{if $user}}
+                <div class="mdl-layout-spacer"></div>
+                <a id="del" href="/post/remove/{{.Id.Hex}}" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect del">
+                  <i class="material-icons">delete</i>
+                </a>
+                <div class="mdl-tooltip" for="del">Delete</div>
+                <a id="edit" href="/post/edit/{{.Id.Hex}}" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                  <i class="material-icons">edit</i>
+                </a>
+                {{end}}
+              </div>
+            </header>
+          </div>
+          <div>
+            <p>
+            {{.Body}}
+            </p>
+          </div>
+          <footer>
+            {{range .Tags}}
+            <a href="?tags={{.}}"
+               class="mdl-button
+               mdl-button--colored
+               mdl-js-button mdl-js-ripple-effect">
+              {{.}}
+            </a>
+            {{end}}
+          </footer>
         </div>
-        <div class="mdl-card__supporting-text">
-          {{.Body}}
-        </div>
-        <div class="mdl-card__actions mdl-card--border">
-          {{range .Tags}}
-          <a href="tags/{{.}}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-            {{.}}
-          </a>
-          {{end}}
-        </div>
-        <div class="mdl-card__menu">
-          {{if $user}}
-          <a id="del" href="/post/remove/{{.Id.Hex}}" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect del">
-            <i class="material-icons">delete</i>
-          </a>
-          <div class="mdl-tooltip" for="del">Delete</div>
-          <a id="edit" href="/post/edit/{{.Id.Hex}}" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-            <i class="material-icons">edit</i>
-          </a>
-          <div class="mdl-tooltip" for="edit">Edit</div>
-          {{end}}
-        </div>
+        {{end}}
       </div>
-      {{end}}
       </main>
     </div>
-    <script src="http://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
-    <script src="/static/scripts/main.js"></script>
+    <script src="static/scripts/main.js"></script>
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+
+
   </body>
 </html>
